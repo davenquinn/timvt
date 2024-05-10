@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import Any, ClassVar, Dict, List, Optional
 
 import morecantile
-from buildpg import Func
+from buildpg import Func, RawDangerous
 from buildpg import Var as pg_variable
 from buildpg import asyncpg, clauses, funcs, render, select_fields
 from pydantic import BaseModel, root_validator
@@ -157,6 +157,12 @@ class Table(Layer, DBTable):
         tms_srid = tms.crs.to_epsg()
         tms_proj = tms.crs.to_proj4()
 
+        # This may be more valid but it doesn't add quotes around the column names
+        # _fields = select_fields(*cols)
+
+        _fields = [f'"{f}"' for f in cols]
+        _fields = ", ".join(_fields)
+
         async with pool.acquire() as conn:
             sql_query = """
                 WITH
@@ -209,7 +215,7 @@ class Table(Layer, DBTable):
                 sql_query,
                 tablename=pg_variable(self.id),
                 geometry_column=pg_variable(geometry_column.name),
-                fields=select_fields(*cols),
+                fields=RawDangerous(_fields),
                 xmin=bbox.left,
                 ymin=bbox.bottom,
                 xmax=bbox.right,
