@@ -23,15 +23,15 @@ class TileJSON(BaseModel):
 
     tilejson: str = "2.2.0"
     name: Optional[str]
-    description: Optional[str]
+    description: Optional[str] = None
     version: str = "1.0.0"
-    attribution: Optional[str]
-    template: Optional[str]
-    legend: Optional[str]
+    attribution: Optional[str] = None
+    template: Optional[str] = None
+    legend: Optional[str] = None
     scheme: SchemeEnum = SchemeEnum.xyz
     tiles: List[str]
-    grids: Optional[List[str]]
-    data: Optional[List[str]]
+    grids: Optional[List[str]] = None
+    data: Optional[List[str]] = None
     minzoom: int = Field(0, ge=0, le=30)
     maxzoom: int = Field(30, ge=0, le=30)
     bounds: List[float] = [-180, -90, 180, 90]
