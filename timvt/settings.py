@@ -5,12 +5,13 @@ TiMVT uses BaseSettings to either get settings from `.env` or environment variab
 see: https://pydantic-docs.helpmanual.io/usage/settings/
 
 """
+
 import sys
 from functools import lru_cache
 from typing import Any, Dict, List, Optional
-from pydantic_settings import BaseSettings
-import pydantic
 
+import pydantic
+from pydantic_settings import BaseSettings
 
 # Pydantic does not support older versions of typing.TypedDict
 # https://github.com/pydantic/pydantic/pull/3374
@@ -117,7 +118,7 @@ class PostgresSettings(BaseSettings):
     postgres_port: Optional[str] = None
     postgres_dbname: Optional[str] = None
 
-    database_url: Optional[pydantic.PostgresDsn] = None
+    database_url: Optional[str] = None
 
     db_min_conn_size: int = 1
     db_max_conn_size: int = 10

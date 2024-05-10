@@ -1,14 +1,13 @@
 """timvt.db: database events."""
 
+from os import getenv
 from typing import Any, Optional
 
 import orjson
 from buildpg import asyncpg
-
+from fastapi import FastAPI
 from timvt.dbmodel import get_table_index
 from timvt.settings import PostgresSettings
-
-from fastapi import FastAPI
 
 
 async def con_init(conn):
@@ -31,7 +30,7 @@ async def connect_to_db(
         settings = PostgresSettings()
 
     app.state.pool = await asyncpg.create_pool_b(
-        settings.database_url.unicode_string(),
+        settings.database_url,
         min_size=settings.db_min_conn_size,
         max_size=settings.db_max_conn_size,
         max_queries=settings.db_max_queries,
