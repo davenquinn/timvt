@@ -131,7 +131,7 @@ class PostgresSettings(BaseSettings):
     class Config:
         """model config"""
 
-        env_file = ".env"
+        env_file = ".env-test"
 
     # https://github.com/tiangolo/full-stack-fastapi-postgresql/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/backend/app/app/core/config.py#L42
     @pydantic.validator("database_url", pre=True)
