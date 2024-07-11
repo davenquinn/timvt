@@ -42,6 +42,7 @@ class TableSettings(BaseSettings):
         env_prefix = "TIMVT_"
         env_file = ".env"
         env_nested_delimiter = "__"
+        extra = "ignore"
 
 
 class _ApiSettings(BaseSettings):
@@ -93,6 +94,7 @@ class _TileSettings(BaseSettings):
 
         env_prefix = "TIMVT_"
         env_file = ".env"
+        extra = "ignore"
 
 
 @lru_cache()
