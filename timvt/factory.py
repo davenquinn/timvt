@@ -211,7 +211,6 @@ class VectorTilerFactory:
                     return None
 
             table_catalog = getattr(request.app.state, "table_catalog", {})
-            print(table_catalog)
             return [
                 Table(**table_info, tileurl=_get_tiles_url(table_id))
                 for table_id, table_info in table_catalog.items()
